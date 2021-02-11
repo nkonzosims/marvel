@@ -1,0 +1,10 @@
+{
+  "/api/marvel": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/api/marvel/character/profile/:id": {
+    "target": "http://localhost:8000",
+    "secure": false
+  }
+}

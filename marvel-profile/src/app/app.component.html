@@ -1,0 +1,86 @@
+<div cdkDropListGroup>
+  <h1>Marvel Character Profiles</h1>
+  <div class="container">
+    <div class="character-list-container">
+      <h5 class="title">List of Characters</h5>
+      <div
+        class="wrapper"
+        id="characters"
+        cdkDropList
+        [cdkDropListData]="characters"
+        cdkDropListConnectedTo="character"
+        (cdkDropListDropped)="drop($event)"
+        [cdkDropListEnterPredicate]="noReturnPredicate">
+        <div
+          *ngFor="let character of characters"
+          cdkDrag
+          [cdkDragData]="character">
+          * {{ character.name }}
+        </div>
+      </div>
+      <div class="btn-wrapper">
+        <button (click)="getCharacters()" mat-raised-button color="primary">
+          Get Characters
+        </button>
+      </div>
+    </div>
+
+    <div class="character-container">
+      <div class="character">
+        <h5 class="title">Drag Character Here</h5>
+        <div
+          class="character-name"
+          id="character"
+          cdkDropList
+          [cdkDropListData]="character"
+          cdkDropListConnectedTo="characters"
+          (cdkDropListDropped)="drop($event)"
+          [cdkDropListEnterPredicate]="existancePredicate"
+        >
+          <span *ngFor="let char of character" cdkDrag [cdkDragData]="char">
+            {{ char.name }}
+          </span>
+        </div>
+      </div>
+
+      <div class="info-container">
+        <h5 class="title">Displayed Character Info</h5>
+        <div class="character-info">
+          <span *ngIf="profile">
+            <div class="avatar">
+              <h4 class="title">{{ profile.characters.name }}</h4>
+              <div class="img">
+                <img src="{{
+                  profile.characters.imagePath
+                }}.jpg" 
+                height="100px"
+                width="100px"
+                alt="{{ profile.characters.name}}">
+              </div>
+            </div>
+            <div class="stories">
+              <h4>Stories</h4>
+              <div 
+                *ngIf="profile.characters.stories.length > 0; else showStoriesError"
+                class="comics-stories-wrapper">
+                <div *ngFor="let story of profile.characters.stories"
+                >{{ story.title }}</div>
+              </div>
+              <ng-template #showStoriesError>No Stories found</ng-template>
+            </div>
+            <div class="comics-stories-wrapper">
+              <h4>Comics</h4>
+              <div 
+                *ngIf="profile.characters.comics.length > 0; else showComicsError"
+                class="comics-stories-wrapper">
+                <div *ngFor="let comic of profile.characters.comics"
+                >{{ comic.title }}</div>
+              </div>
+              <ng-template #showComicsError>No Comics found</ng-template>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
